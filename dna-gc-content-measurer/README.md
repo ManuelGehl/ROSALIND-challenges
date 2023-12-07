@@ -33,7 +33,7 @@ It reads DNA sequences from an input file in FASTA format, calculates the GC con
 
 ```bash
 
-    python dna_gc_measurer.py
+python dna_gc_measurer.py
 ```
 
 5. Check the results in the output file (result.txt by default).
