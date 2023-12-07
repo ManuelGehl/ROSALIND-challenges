@@ -36,7 +36,7 @@ It reads DNA sequences from an input file in FASTA format, calculates the GC con
    ```
 
 5. Check the results in the output file (result.txt by default).
-6. 
+ 
 
 **Customization**
 
