@@ -22,7 +22,7 @@ It reads DNA sequences from an input file in FASTA format, calculates the GC con
 2. Clone the repository:
 
    ```bash
-   git clone 
+   git clone
    ```
    Navigate to the project directory:
 
@@ -36,7 +36,7 @@ Run the script:
     python dna_gc_measurer.py
 ```
 
-    Check the results in the output file (result.txt by default).
+Check the results in the output file (result.txt by default).
 
 Customization
 
