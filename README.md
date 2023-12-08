@@ -12,15 +12,21 @@ Visit my [ROSALIND profile](https://rosalind.info/users/ManuelGehl/) to track my
 ## List of Challenges
 
 ### Challenge 1: [Computing GC Content](https://rosalind.info/problems/gc/)
-**Description:** 
 
+**Description:** 
 The task involves analyzing DNA strings in FASTA format to determine the string with the highest GC-content. The goal is to identify and return the ID of the DNA string with the highest GC-content, along with the corresponding GC-content value.
 
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/dna-gc-content-measurer):** 
-
 The script defines a `GCMeasurer` class that reads DNA sequences from a FASTA file, measures their GC content, and writes the sequence ID with the highest GC content to an output file. 
 It stores the IDs from the header and the corresponding sequences in a dictionary. From this, the GC content (occurrence of the letters "G" and "C" in the DNA sequence (string) relative to its length) is calculated and stored in another dictionary with the corresponding IDs as keys. This dictionary is then sorted by its values and the highest value is written together with its ID to a txt file.
 
+### Challenge 2: [Hamming distance](https://rosalind.info/problems/hamm/)
+
+**Description:**
+The DNA Mutation Measurer project focuses on calculating the Hamming distance between two DNA sequences provided in a file. The Hamming distance is a metric that quantifies the dissimilarity between two strings of equal length, representing the number of differing positions.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/hamming-distance-measurer):**
+The project introduces a MutationMeasurer class to handle the process. It begins by reading DNA sequences from an input file, ensuring the presence of at least two sequences. The Hamming distance is then computed by comparing corresponding positions in the two sequences. The result is displayed as the number of differing positions.
 
 ## Credits
 - Author: Manuel Gehl
