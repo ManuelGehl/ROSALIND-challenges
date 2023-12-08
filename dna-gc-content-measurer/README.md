@@ -54,4 +54,4 @@ It reads DNA sequences from an input file in FASTA format, calculates the GC con
 
 **License**
 
-This project is licensed under the MIT License.
+- This project is licensed under the MIT License.
