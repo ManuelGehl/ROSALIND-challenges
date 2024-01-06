@@ -1,7 +1,7 @@
 # Import FASTA reading function
 import sys
 import os
-sys.path.append("/home/manuel/coding/projects/Rosalind/Utility")
+sys.path.append("../Utility")
 from fasta_utils import read_fasta
 
 class RestrictionSiteFinder:
@@ -9,7 +9,7 @@ class RestrictionSiteFinder:
     
     """
     # Class constants
-    DEFAULT_INPUT_PATH = "14 - Locating Restriction Sites/data.txt"
+    DEFAULT_INPUT_PATH = "data.txt"
     DEFAULT_OUTPUT_PATH = "result.txt"
     WINDOW_SIZE = 4
     
@@ -21,8 +21,7 @@ class RestrictionSiteFinder:
         self.output_path = output_path or self.DEFAULT_OUTPUT_PATH
         self.dna_sequence = []
         self.rev_complement = []
-        self.current_motif = None
-        self.window_size = 4
+        self.window_size = self.WINDOW_SIZE
         self.motifs = {}
         
         
@@ -47,48 +46,64 @@ class RestrictionSiteFinder:
                         "T": "A",
                         "G": "C",
                         "C": "G"}
-        # Define empty list
-        complement_seq = []
-        
         # Map characters in sequence
-        for char in self.rev_complement:
-            complement_seq.append(mapping_dict[char])
-        
+        complement_seq = [mapping_dict[char] for char in self.rev_complement]
         self.rev_complement = "".join(complement_seq)
     
-    def find_restriction_site(self):
-        # Check if window size is between 4 and 12
-        assert self.window_size >= 4 and self.window_size <= 12, f"Window size {self.window_size}, expected 4-12"
+    def create_substrings(self, sequence):
+        """
+        Generates substrings from DNA sequence and reverse complement sequence.
+        Window size ranges from 4 to 12.
+        Stores substrings as 2 nested dictionaries of shape {window_size:{positions:substrings}}
         
-        # Determine steps 
-        steps = len(self.dna_sequence) + 1 - self.window_size
+        """
+        # Determine lenght of sequence
+        sequence_length = len(sequence)
+        # Generate empty dictionary to store window size and nested dictionary
+        window_dict = {}
+        # Loop trough different window sizes
+        for window_size in range(4, 13):
+            # Determine how many steps for given window size
+            step_size = sequence_length - window_size
+            # Generate empty dictionary to store positions and substrings
+            pos_substrings = {}
+            # Iterate over whole sequence and store positions and substrings
+            for step in range(step_size):
+                substring = sequence[step:step + window_size]
+                pos_substrings[step + 1] = substring
+            # Store values in dictionary
+            window_dict[window_size] = pos_substrings
         
-        # Scan trough sequence
-        for step in range(steps):
-            window = self.dna_sequence[0 + step: self.window_size + step] 
-            # Check if motif is found in reverse complement
-            if window in self.rev_complement:
-                self.motifs[step + 1] = window
-        
+        return window_dict
         
     
+    def find_palindrom(self, dna_substrings, rev_substrings):
+        """
+        Checks if DNA substring is equal to its reverse complement at same position.
+        """
+        for window_size in range(4, 13):
+            for pos in dna_substrings[window_size]:
+                if dna_substrings[window_size][pos] == rev_substrings[window_size][pos]:
+                    print(f"Pos1 {pos}")
+                    print(f"DNA {dna_substrings[pos]}")
+                    print(f"Rev {rev_substrings[pos]}")
+                    
+
+        
     def write_result(self):
         """
         Write result to the output file.
         """
         with open(self.output_path, "w") as file:
-            file.write(f"{self.longest_motif}")
-            
-            
-#%%
+            file.write(f"{self.longest_motif}")      
+""""
 restriction_finder = RestrictionSiteFinder()
 restriction_finder.read_sequence()
 restriction_finder.reverse_complement()
-restriction_finder.find_restriction_site()
- #%%       
-def main():
-    restriction_finder = RestrictionSiteFinder()
-    restriction_finder.read_sequence()
+dna_substrings = restriction_finder.create_substrings(sequence=restriction_finder.dna_sequence)
+rev_substrings = restriction_finder.create_substrings(sequence=restriction_finder.rev_complement)
+restriction_finder.find_palindrom(dna_substrings=dna_substrings, rev_substrings=rev_substrings)
 
 if __name__ == "__main__":
     main()
+"""
