@@ -87,7 +87,7 @@ class RestrictionSiteFinder:
         # Unpack window_size tuple to get minimum and maximum window size
         min_window, max_window = self.window_range
         # Loop trough different window sizes
-        for window_size in range(min_window, max_window):
+        for window_size in range(min_window, max_window + 1):
             # Determine how many steps for given window size
             step_size = sequence_length - (window_size - 1)
             # Generate empty dictionary to store positions and substrings
