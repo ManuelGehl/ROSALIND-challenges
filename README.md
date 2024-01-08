@@ -68,6 +68,14 @@ The goal was to find the longest common motif for a set of given DNA sequences.
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/longest-common-motif-finder):**
 The `LongestCommonMotifFinder` class reads sequences from a FASTA file and sets the first sequence as a reference. It then initializes the first motif by setting the motif to the first nucleotide of the reference sequence. If this motif is found in all other sequences, it is extended by one nucleotide, including the next nucleotide from the reference sequence. However, if the motif is not found in at least one other DNA sequence, the start position in the reference sequence is shifted downstream by 1 nucleotide and the process starts over. The current motif length is saved, and if it is at least as long as any motif before it, it is saved. In effect, the longest motif is stored and output.
 
+### Challenge 8: [Locating Restriction Sites](https://rosalind.info/problems/revp/)
+
+**Description:**
+The challenge was to read a DNA string in fasta format and find all reverse palindromic motifs from size 4 to size 12.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/restriction-site-finder):**
+The `RestrictionSiteFinder` class reads a sequence from a FASTA file and creates all possible substrings of size 4 to 12 with a step size of 1 and stores them together with their starting position in the DNA sequence. These substrings are then converted to their reverse complementary sequences and checked to see if they occur in the DNA sequence. If they do, the start position and length of the substring are written to a file.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
