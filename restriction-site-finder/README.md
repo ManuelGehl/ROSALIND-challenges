@@ -10,7 +10,7 @@ The Restriction Site Finder is a Python script designed to read DNA sequences fr
 - Dependencies:
     - os
     - sys
-    - read_fasta from XXX
+    - read_fasta from [fasta_reader](https://github.com/ManuelGehl/CodeToolbox/blob/main/fasta_reader.py)
 
 ## Usage
 
