@@ -4,7 +4,7 @@ from typing import Tuple
 
 # Import helper functions
 # Can be found in my GitHub repository "Codetoolbox".
-sys.append("../Utility")
+sys.path.append("../Utility")
 from fasta_reader import read_fasta
 
 class RestrictionSiteFinder:
