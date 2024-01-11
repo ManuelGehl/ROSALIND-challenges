@@ -76,6 +76,14 @@ The challenge was to read a DNA string in fasta format and find all reverse pali
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/restriction-site-finder):**
 The `RestrictionSiteFinder` class reads a sequence from a FASTA file and creates all possible substrings of size 4 to 12 with a step size of 1 and stores them together with their starting position in the DNA sequence. These substrings are then converted to their reverse complementary sequences and checked to see if they occur in the DNA sequence. If they do, the start position and length of the substring are written to a file.
 
+### Challenge 9: [Calculating Protein Mass](https://rosalind.info/problems/prtm/)
+
+**Description:**
+The aim was to calculate the monoisotopic mass of a peptide given as a string.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/monoisotopic-mass-calculator):**
+The `MonoisotopicMassCalculator` class reads an amino acid sequence from an input file and maps the monoisotopic mass to all characters in the sequence.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
