@@ -1,13 +1,11 @@
 import os
-import sys
 from typing import Tuple, List, Dict
 
 # Import helper functions
 # Can be found in my GitHub repository "Codetoolbox".
-sys.path.append("../Utility")
-from fasta_reader import read_fasta
-from reverse_complement import reverse_complement
-from codon_mapper import codon_mapping
+from Utility.fasta_reader import read_fasta
+from Utility.reverse_complement import reverse_complement
+from Utility.condon_mapper import codon_mapping
 
 class ORFFinder:
     
@@ -29,6 +27,7 @@ class ORFFinder:
         self.reverse_1 = None
         self.reverse_2 = None
         self.reverse_3 = None
+        self.results = []
     
     def read_sequence(self) -> None:
         # Check if file exists
@@ -55,18 +54,16 @@ class ORFFinder:
         self.reverse_3 = self.rev_complement[2:]
     
     def find_start(self, sequence: str) -> List:
-        step_size = len(sequence) // 3
         start_positions = []
-        for step in range(step_size):
-            codon = sequence[3 * step : 3 * step + 3]
+        for step in range(0, len(sequence), 3):
+            codon = sequence[step : step + 3]
             if codon == self.START_CODON:
                 start_positions.append(step)
         return start_positions
     
     def find_stop(self, sequence: str) -> List:
-        step_size = len(sequence) // 3
         stop_positions = []
-        for step in range(step_size):
+        for step in range(0, len(sequence), 3):
             codon = sequence[step:step + 3]
             if codon in self.STOP_CODONS:
                 stop_positions.append(step)
@@ -94,23 +91,12 @@ class ORFFinder:
         for start_pos, stop_pos in reading_frame_dict.items():
             dna_sequence = sequence[start_pos:stop_pos]
             protein_sequence = codon_mapping(sequence=dna_sequence, mode="DNA")
-            
-        
-    
-                    
-        
-    
-    
-    
+            self.results.append(protein_sequence)
     
     def write_result(self) -> None:
-        """
-        """
-        # First sort results based on positions
-        self.results = dict(sorted(self.results.items()))
         with open(self.output_path, "w") as file:
-            for pos, size in self.results.items():
-                file.write(f"{pos} {size}\n")
+            for orf in self.results:
+                file.write(f"{orf}\n")
     
     def run_rest(self):
         tester = ORFFinder()
@@ -119,7 +105,9 @@ class ORFFinder:
         tester.create_reading_frames()
         starts = tester.find_start(tester.forward_1)
         stops = tester.find_stop(tester.forward_1)
-        tester.find_orf(start_pos=starts, stop_pos=stops)
+        dicti = tester.find_orf(start_pos=starts, stop_pos=stops)
+        tester.translate_orf(reading_frame_dict=dicti, sequence=tester.forward_1)
+        tester.write_result()
         
 """
 def main():
