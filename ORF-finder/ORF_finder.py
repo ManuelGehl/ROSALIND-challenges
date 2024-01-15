@@ -103,7 +103,7 @@ class ORFFinder:
 
         Returns:
             None
-        """"
+        """
         # Create reading frames on forward strand
         self.sequences["for_1"] = self.raw_sequence
         self.sequences["for_2"] = self.raw_sequence[1:]
@@ -216,26 +216,29 @@ class ORFFinder:
     
 
         
-"""
+
 def main():
-    restriction_finder = RestrictionSiteFinder()
-    restriction_finder.read_sequence()
-    restriction_finder.create_substrings()
-    restriction_finder.find_palindrom()
-    restriction_finder.write_result()
+    """
+    Main function to execute the Open Reading Frame (ORF) analysis pipeline.
+
+    This function creates an instance of the ORFFinder class, reads the DNA sequence
+    from the input file, transforms the sequence, generates reading frames, identifies
+    start and stop codons, finds ORFs, translates ORFs into protein sequences, and
+    writes the results to the output file.
+
+    Returns:
+        None
+    """
+    orf_finder = ORFFinder()
+    orf_finder.read_sequence()
+    orf_finder.transform_sequence()
+    orf_finder.generate_reading_frames()
+    orf_finder.find_start()
+    orf_finder.find_stop()
+    orf_finder.find_orf()
+    orf_finder.translate_orf()
+    orf_finder.remove_duplicates()
+    orf_finder.write_result()
 
 if __name__ == "__main__":
     main()
-    
-    
-tester = ORFFinder()
-tester.read_sequence()
-tester.transform_sequence()
-tester.generate_reading_frames()
-tester.find_start()
-tester.find_stop()
-tester.find_orf()
-tester.translate_orf()
-
-tester.write_result()
-"""
