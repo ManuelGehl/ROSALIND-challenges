@@ -21,13 +21,11 @@ class ORFFinder:
         self.output_path = output_path or self.DEFAULT_OUTPUT_PATH
         self.raw_sequence = None
         self.rev_complement = None
-        self.forward_1 = None
-        self.forward_2 = None
-        self.forward_3 = None
-        self.reverse_1 = None
-        self.reverse_2 = None
-        self.reverse_3 = None
-        self.results = []
+        self.sequences = {}
+        self.start_dictionary = {}
+        self.stop_dictionary = {}
+        self.orf_positions = {}
+        self.translated_orf = []
     
     def read_sequence(self) -> None:
         # Check if file exists
@@ -43,71 +41,62 @@ class ORFFinder:
         # Transform DNA sequence in reverse complement
         self.rev_complement = reverse_complement(dna_sequence=self.raw_sequence)
     
-    def create_reading_frames(self) -> None:
+    def generate_reading_frames(self) -> None:
         # Create reading frames on forward strand
-        self.forward_1 = self.raw_sequence
-        self.forward_2 = self.raw_sequence[1:]
-        self.forward_3 = self.raw_sequence[2:]
+        self.sequences["for_1"] = self.raw_sequence
+        self.sequences["for_2"] = self.raw_sequence[1:]
+        self.sequences["for_3"] = self.raw_sequence[2:]
         # Create reading frames on reverse strand
-        self.reverse_1 = self.rev_complement
-        self.reverse_2 = self.rev_complement[1:]
-        self.reverse_3 = self.rev_complement[2:]
+        self.sequences["rev_1"] = self.rev_complement
+        self.sequences["rev_2"] = self.rev_complement[1:]
+        self.sequences["rev_3"] = self.rev_complement[2:]
     
-    def find_start(self, sequence: str) -> List:
-        start_positions = []
-        for step in range(0, len(sequence), 3):
-            codon = sequence[step : step + 3]
-            if codon == self.START_CODON:
-                start_positions.append(step)
-        return start_positions
+    def find_start(self) -> None:
+        for name, sequence in self.sequences.items():
+            start_positions = [step for step in range(0, len(sequence), 3) if sequence[step:step+3] == self.START_CODON]
+            self.start_dictionary[name] = start_positions
     
-    def find_stop(self, sequence: str) -> List:
-        stop_positions = []
-        for step in range(0, len(sequence), 3):
-            codon = sequence[step:step + 3]
-            if codon in self.STOP_CODONS:
-                stop_positions.append(step)
-        return stop_positions
+    def find_stop(self) -> None:
+        for name, sequence in self.sequences.items():
+            stop_positions = [step for step in range(0, len(sequence), 3) if sequence[step:step+3] in self.STOP_CODONS]
+            self.stop_dictionary[name] = stop_positions
     
-    def find_orf(self, start_pos: List, stop_pos: List) -> Dict:
-        orf_dict = {}
-        # Sort start and stop positions
-        start_pos = sorted(start_pos)
-        stop_pos = sorted(stop_pos)
-        # Iterate over start positions
-        for st_pos in start_pos:
-            # Iterate over stop positions
-            for sp_pos in stop_pos:
-                # Check if stop position is greater than start position
-                if sp_pos > st_pos:
-                    # Save ORF
-                    orf_dict[st_pos] = sp_pos
-                    # Break loop to only save the first start-stop-codon pair
-                    break
-        return orf_dict
-
-    def translate_orf(self, reading_frame_dict: Dict, sequence: str) -> List:
-        # Iterate over dictionary
-        for start_pos, stop_pos in reading_frame_dict.items():
-            dna_sequence = sequence[start_pos:stop_pos]
-            protein_sequence = codon_mapping(sequence=dna_sequence, mode="DNA")
-            self.results.append(protein_sequence)
+    def find_orf(self) -> None:
+        for key in self.sequences:
+            orf_dict = {}
+             # Sort start and stop positions
+            start_pos = sorted(self.start_dictionary[key])
+            stop_pos = sorted(self.stop_dictionary[key])
+            # Iterate over start positions
+            for st_pos in start_pos:
+                # Iterate over stop positions
+                for sp_pos in stop_pos:
+                    # Check if stop position is greater than start position
+                    if sp_pos > st_pos:
+                        # Save ORF
+                        orf_dict[st_pos] = sp_pos
+                        # Break loop to only save the first start-stop-codon pair
+                        break
+            self.orf_positions[key] = orf_dict
+        
+    def translate_orf(self) -> None:
+        # Iterate over orf dictionary and continue only with filled dictionaries
+        for seq, orf in self.orf_positions.items():
+            for start_pos, stop_pos in orf.items():
+                dna_sequence = self.sequences[seq][start_pos:stop_pos]
+                protein_sequence = codon_mapping(sequence=dna_sequence, mode="DNA")
+                
+                self.translated_orf.append(protein_sequence)
+    
+    def remove_duplicates(self) -> None:
+        self.translated_orf = set(self.translated_orf)
     
     def write_result(self) -> None:
         with open(self.output_path, "w") as file:
-            for orf in self.results:
+            for orf in self.translated_orf:
                 file.write(f"{orf}\n")
     
-    def run_rest(self):
-        tester = ORFFinder()
-        tester.read_sequence()
-        tester.transform_sequence()
-        tester.create_reading_frames()
-        starts = tester.find_start(tester.forward_1)
-        stops = tester.find_stop(tester.forward_1)
-        dicti = tester.find_orf(start_pos=starts, stop_pos=stops)
-        tester.translate_orf(reading_frame_dict=dicti, sequence=tester.forward_1)
-        tester.write_result()
+
         
 """
 def main():
@@ -119,4 +108,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+tester = ORFFinder()
+tester.read_sequence()
+tester.transform_sequence()
+tester.generate_reading_frames()
+tester.find_start()
+tester.find_stop()
+tester.find_orf()
+tester.translate_orf()
+
+tester.write_result()
 """
