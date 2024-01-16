@@ -75,7 +75,9 @@ class ORFFinder:
         # Check if file exists
         if not os.path.exists(self.input_path):
             raise FileNotFoundError(f"Input file not found: {self.input_path}")
-        
+        # Check if file is not empty
+        if os.stat(self.input_path).st_size == 0:
+            raise FileNotFoundError(f"Empty file")
         # Read all sequences from file
         seq_dict = read_fasta(self.input_path)
         # Put sequences in string
