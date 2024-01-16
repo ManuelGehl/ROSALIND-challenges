@@ -65,6 +65,7 @@ class ORFFinder:
 
         Raises:
             FileNotFoundError: If the specified input file does not exist.
+            FileNotFoundError: If the specified input file is empty.
 
         Reads the sequence from the file using the 'read_fasta' function and stores
         the concatenated sequence in the 'raw_sequence' attribute of the class.
