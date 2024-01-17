@@ -1,7 +1,7 @@
 # ORFFinder: Open Reading Frame (ORF) Analysis
 ## Overview
 
-The ORFFinder class is designed for identifying Open Reading Frames (ORFs) in DNA sequences. 
+The `ORFFinder` class is designed for identifying Open Reading Frames (ORFs) in DNA sequences. 
 It includes methods for reading DNA sequences from a file, transforming sequences, generating reading frames, finding start and stop codons, identifying ORFs, translating ORFs into protein sequences, removing duplicate protein sequences, and writing the results to an output file.
 
 ## Usage
