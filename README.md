@@ -1,5 +1,7 @@
 # ROSALIND-challenges
 
+<img src="https://github.com/ManuelGehl/ROSALIND-challenges/blob/main/Rosalind%20image.png?raw=true" height=300>
+
 ## Overview
 
 This repository contains my solutions to various bioinformatics challenges from [ROSALIND](http://rosalind.info/). 
