@@ -68,7 +68,7 @@ The main function provides an example pipeline for executing the ORF analysis.
 It creates an instance of the `ORFFinder` class, reads the DNA sequence from the input file, transforms the sequence, generates reading frames, identifies start and stop codons, finds ORFs, translates ORFs into protein sequences, removes duplicates, and writes the results to the output file.
 
 ```python
-
+# Main function workflow
 orf_finder = ORFFinder()
 orf_finder.read_sequence()
 orf_finder.transform_sequence()
