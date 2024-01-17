@@ -69,6 +69,14 @@ It creates an instance of the `ORFFinder` class, reads the DNA sequence from the
 
 ```python
 
-if __name__ == "__main__":
-    main()
+orf_finder = ORFFinder()
+orf_finder.read_sequence()
+orf_finder.transform_sequence()
+orf_finder.generate_reading_frames()
+orf_finder.find_start()
+orf_finder.find_stop()
+orf_finder.find_orf()
+orf_finder.translate_orf()
+orf_finder.remove_duplicates()
+orf_finder.write_result()
 ```
