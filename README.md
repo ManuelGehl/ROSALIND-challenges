@@ -84,6 +84,14 @@ The aim was to calculate the monoisotopic mass of a peptide given as a string.
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/monoisotopic-mass-calculator):**
 The `MonoisotopicMassCalculator` class reads an amino acid sequence from an input file and maps the monoisotopic mass to all characters in the sequence.
 
+### Challenge 10: [Open Reading Frames](https://rosalind.info/problems/orf/)
+
+**Description:**
+The problem was to find all unique candidate protein sequences that can be translated from the open reading frames (ORFs) of a given DNA string. The DNA string was provided in FASTA format and can be up to 1 kbp in length. An ORF begins at the start codon and ends at a stop codon with no other stop codons in between.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/ORF-finder):**
+The `ORFFinder` class is designed to identify Open Reading Frames (ORFs) in DNA sequences. After converting the DNA sequence to its reverse complement sequence, both sequences are used to generate all possible frames (6 in total). For each frame, the positions of the start and stop codons are determined. The start and stop positions are iterated over to determine which combinations of start and stop positions satisfy both that the stop position is greater than the start position and that no other stop position lies between them.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
