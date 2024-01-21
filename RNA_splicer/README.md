@@ -17,6 +17,7 @@ python RNA_splicer.py
 ```
 ## Class Structure
 
+
 **Attributes:**
 
 
