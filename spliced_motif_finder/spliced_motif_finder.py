@@ -52,21 +52,46 @@ class SplicedMotifFinder:
         
         # Read all sequences from file
         seq_dict = read_fasta(self.input_path)
+        # Output first sequence as sequence and second sequence as motif
+        self.sequence, self.motif = seq_dict.values()
     
-    
-    def write_result(self) -> None:
+    def generate_positions(self):
+        # Generate empty dictionary to store position lists
+        pos_dictionary = {}
+        #position_list = []
         
-        with open(self.output_path, "w") as file:
+        for char_number, char_mot in enumerate(self.motif):
+            
+            position_list = []
+            for pos, char_seq in enumerate(self.sequence):
+                if char_mot == char_seq:
+                    position_list.append(pos)
+            
+            pos_dictionary[char_number] = position_list
+        
+        return pos_dictionary
+    
+    def find_spliced_motifs(self, positions:Dict):
+        
+                    
+        
+    
+    
+    #def write_result(self) -> None:
+        
+        #with open(self.output_path, "w") as file:
             #for orf in self.translated_orf:
              #   file.write(f"{orf}\n")
     
 
-        
+def tester():
+    tester = SplicedMotifFinder()
+    tester.read_sequence()
+    return tester       
 
 def main():
-    
     spliced_motif_finder = SplicedMotifFinder()
     spliced_motif_finder.read_sequence()
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()
