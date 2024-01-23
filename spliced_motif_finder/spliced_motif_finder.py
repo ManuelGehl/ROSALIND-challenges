@@ -57,7 +57,7 @@ class SplicedMotifFinder:
     
     def generate_positions(self):
         # Generate empty dictionary to store position lists
-        pos_dictionary = {}
+        pos_dictionary = []
         #position_list = []
         
         for char_number, char_mot in enumerate(self.motif):
@@ -67,11 +67,29 @@ class SplicedMotifFinder:
                 if char_mot == char_seq:
                     position_list.append(pos)
             
-            pos_dictionary[char_number] = position_list
+            pos_dictionary.append(position_list)
         
         return pos_dictionary
     
-    def find_spliced_motifs(self, positions:Dict):
+    def padding(self, positions):
+        # Check what is the longest list in positions
+        max_len = 0
+        for element in positions:
+            current_len = len(element)
+            if current_len > max_len:
+                max_len = current_len
+        
+        # Iterate over lists and fill up values with 0s
+        padded_positions = []
+        for element in positions:
+            diff = int(max_len - len(element))
+            for _ in range(diff):
+                element.append(0)
+        
+            padded_positions.append(element)
+        
+        return padded_positions
+        
         
                     
         
@@ -87,6 +105,8 @@ class SplicedMotifFinder:
 def tester():
     tester = SplicedMotifFinder()
     tester.read_sequence()
+    pos_dict = tester.generate_positions()
+    tester.padding(pos_dict)
     return tester       
 
 def main():
