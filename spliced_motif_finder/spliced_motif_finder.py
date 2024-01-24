@@ -1,12 +1,22 @@
 import os
-from typing import Tuple, List, Dict
+from typing import List
 
 # Import helper functions
 # Can be found in my GitHub repository "Codetoolbox".
 from Utility.fasta_reader import read_fasta
 
 class SplicedMotifFinder:
-   
+    """
+    A class for finding a spliced motif in a sequence.
+
+    Attributes:
+        DEFAULT_INPUT_PATH (str): Default path to the input data file.
+        DEFAULT_OUTPUT_PATH (str): Default path to the output result file.
+        input_path (str): Path to the input data file.
+        output_path (str): Path to the output result file.
+        sequence (str): The input sequence.
+        motif (str): The motif to be found in the sequence.
+    """
     
     # Class constants
     DEFAULT_INPUT_PATH = "data.txt"
@@ -27,18 +37,16 @@ class SplicedMotifFinder:
         self.output_path = output_path or self.DEFAULT_OUTPUT_PATH
         self.sequence = None
         self.motif = None
-        self.subsequences = []
     
     def read_sequence(self) -> None:
         """
-        Reads a sequence from the specified input file in FASTA formate.
+        Reads a sequence from the specified input file in FASTA format.
 
         Raises:
-            FileNotFoundError: If the specified input file does not exist.
-            FileNotFoundError: If the specified input file is empty.
+            FileNotFoundError: If the specified input file does not exist or is empty.
 
         Reads the sequence from the file using the 'read_fasta' function and stores
-        the concatenated sequence in the 'raw_sequence' attribute of the class.
+        the sequence in the 'sequence' attribute of the class and the motif in the 'motif' attribute.
 
         Returns:
             None
@@ -55,63 +63,83 @@ class SplicedMotifFinder:
         # Output first sequence as sequence and second sequence as motif
         self.sequence, self.motif = seq_dict.values()
     
-    def generate_positions(self):
-        # Generate empty dictionary to store position lists
-        pos_dictionary = []
-        #position_list = []
+    def generate_positions(self) -> List[List[int]]:
+        """
+        Generates a list of position lists for each character in the motif.
+
+        Returns:
+            List with positions as values.
+        """
+        # Generate empty list to store position lists
+        position_list = []
         
-        for char_number, char_mot in enumerate(self.motif):
-            
-            position_list = []
+        # Iterate over each character of the motif
+        for char_mot in self.motif:
+            character_list = []
+            # Iterate over each character of the sequence
             for pos, char_seq in enumerate(self.sequence):
+                # Check if characters are equal and append position in sequence
                 if char_mot == char_seq:
-                    position_list.append(pos)
-            
-            pos_dictionary.append(position_list)
-        
-        return pos_dictionary
+                    character_list.append(pos+1)
+            # Append complete list for each character in motif
+            position_list.append(character_list)
     
-    def padding(self, positions):
-        # Check what is the longest list in positions
-        max_len = 0
-        for element in positions:
-            current_len = len(element)
-            if current_len > max_len:
-                max_len = current_len
+        return position_list
+    
+    def find_spliced_motif(self, pos_lists: List[List[int]]) -> None:
+        """
+        Finds the spliced motif based on the generated position lists.
+
+        Args:
+            pos_lists (List[List[int]]): List of position lists for each character in the motif.
+
+        Returns:
+            None
+        """
+        # Define empty list for storage of firs spliced motif
+        motif = []
+        # Compute how many lists are in pos_lists
+        length_lists = len(pos_lists)
+        # Iterate over nested lists
+        for i in range(length_lists):
+            # Special case for first element
+            if i == 0:
+                motif.append(pos_lists[i][0])
+            else:
+                # Filter for all positions that are greater than last position
+                pos_lists_filtered = [pos for pos in pos_lists[i] if pos > motif[i-1]]
+                # Append first position that is greater than last position of last motif character
+                motif.append(pos_lists_filtered[0])
         
-        # Iterate over lists and fill up values with 0s
-        padded_positions = []
-        for element in positions:
-            diff = int(max_len - len(element))
-            for _ in range(diff):
-                element.append(0)
-        
-            padded_positions.append(element)
-        
-        return padded_positions
-        
-        
-                    
+        self.motif = motif
         
     
     
-    #def write_result(self) -> None:
-        
-        #with open(self.output_path, "w") as file:
-            #for orf in self.translated_orf:
-             #   file.write(f"{orf}\n")
+    def write_result(self) -> None:
+        """
+        Writes the spliced motif to the specified output file.
+
+        Returns:
+            None
+        """
+        with open(self.output_path, "w") as file:
+            for pos in self.motif:
+                file.write(f"{pos} ")
     
 
-def tester():
-    tester = SplicedMotifFinder()
-    tester.read_sequence()
-    pos_dict = tester.generate_positions()
-    tester.padding(pos_dict)
-    return tester       
 
 def main():
+    """
+    Main function to execute the SplicedMotifFinder application.
+    
+    Returns:
+        None
+    """
     spliced_motif_finder = SplicedMotifFinder()
     spliced_motif_finder.read_sequence()
-
-#if __name__ == "__main__":
-#    main()
+    pos_lists = spliced_motif_finder.generate_positions()
+    spliced_motif_finder.find_spliced_motif(pos_lists=pos_lists)
+    spliced_motif_finder.write_result()
+    
+if __name__ == "__main__":
+    main()
