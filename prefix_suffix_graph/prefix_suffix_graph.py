@@ -36,4 +36,25 @@ class PrefixSuffixGraph:
             suffix_dict[seq_id] = suffix
         
         return prefix_dict, suffix_dict
-            
+    
+    def create_adjacency_list(self, prefix_dict: Dict, suffix_dict: Dict):
+        adjacency_list = {}
+        # Iterate over suffixes
+        for seq_id_suf, suffix in suffix_dict.items():
+            for seq_id_pre, prefix in prefix_dict.items():
+                # Check if seq_id is not the same
+                if seq_id_suf != seq_id_pre:
+                    if suffix == prefix:
+                        adjacency_list[seq_id_suf] = seq_id_pre
+        
+        return adjacency_list
+                        
+             
+
+
+"""
+tester = PrefixSuffixGraph()
+seq_dict = tester.read_sequences()
+prefix_dict, suffix_dict = tester.create_3_mers(seq_dict)
+tester.create_adjacency_list(prefix_dict, suffix_dict)
+"""            
