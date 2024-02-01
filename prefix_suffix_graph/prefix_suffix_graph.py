@@ -41,11 +41,17 @@ class PrefixSuffixGraph:
         adjacency_list = {}
         # Iterate over suffixes
         for seq_id_suf, suffix in suffix_dict.items():
+            # Initialize empty list for seq_ids
+            adjacent_ids = []
             for seq_id_pre, prefix in prefix_dict.items():
                 # Check if seq_id is not the same
                 if seq_id_suf != seq_id_pre:
                     if suffix == prefix:
-                        adjacency_list[seq_id_suf] = seq_id_pre
+                        adjacent_ids.append(seq_id_pre)
+                        
+            # Append only hits           
+            if adjacent_ids:            
+                adjacency_list[seq_id_suf] = adjacent_ids
         
         return adjacency_list
                         
