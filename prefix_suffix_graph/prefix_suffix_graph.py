@@ -27,3 +27,13 @@ class PrefixSuffixGraph:
         
         return seq_dict
     
+    def create_3_mers(self, seq_dict: Dict):
+        suffix_dict = {}
+        prefix_dict = {}
+        for seq_id, seq in seq_dict.items():
+            prefix, suffix = seq[:3], seq[-3:]
+            prefix_dict[seq_id] = prefix
+            suffix_dict[seq_id] = suffix
+        
+        return prefix_dict, suffix_dict
+            
