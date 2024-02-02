@@ -60,4 +60,13 @@ class PrefixSuffixGraph:
             for key in adj_list.keys():
                 for value in adj_list[key]:
                     file.write(f"{key} {value}\n")
-         
+
+def main():
+    overlap_graphs = PrefixSuffixGraph()
+    seq_dict = overlap_graphs.read_sequences()
+    prefix_dict, suffix_dict = overlap_graphs.create_3_mers(seq_dict)
+    adjacency_list = overlap_graphs.create_adjacency_list(prefix_dict, suffix_dict)
+    overlap_graphs.write_results(adjacency_list)      
+    
+if __name__ == "__main__":
+    main()   
