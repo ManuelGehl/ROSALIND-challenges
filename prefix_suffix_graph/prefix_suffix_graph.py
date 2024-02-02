@@ -54,13 +54,10 @@ class PrefixSuffixGraph:
                 adjacency_list[seq_id_suf] = adjacent_ids
         
         return adjacency_list
-                        
-             
-
-
-"""
-tester = PrefixSuffixGraph()
-seq_dict = tester.read_sequences()
-prefix_dict, suffix_dict = tester.create_3_mers(seq_dict)
-tester.create_adjacency_list(prefix_dict, suffix_dict)
-"""            
+    
+    def write_results(self, adj_list: Dict) -> None:
+        with open(self.output_path, "w") as file:
+            for key in adj_list.keys():
+                for value in adj_list[key]:
+                    file.write(f"{key} {value}\n")
+         
