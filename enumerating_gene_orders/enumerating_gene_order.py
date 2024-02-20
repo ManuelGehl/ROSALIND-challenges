@@ -8,6 +8,7 @@ class PermutationList:
         self.total_perm = None
         self.freq = None
         self.stock = None
+        self.permutations = None
     
     def input(self) -> int:
         gene_number =  int(input("Please enter a number of genes for permutation between 0 and 7: "))
@@ -43,7 +44,14 @@ class PermutationList:
             else:
                 permutation_list.append(current_permutation)
         
-        print(permutation_list)
+        self.permutations = permutation_list
+    
+    def output(self):
+        print(self.total_perm)
+        for permutation in self.permutations:
+            print(" ".join(map(str, permutation)))
+                
+    
             
             
         
@@ -57,4 +65,5 @@ tester.input()
 tester.total_permutations()
 tester.generate_stock()
 tester.generate_permutations()
+tester.output()
 """
