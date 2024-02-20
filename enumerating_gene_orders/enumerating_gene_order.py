@@ -1,5 +1,5 @@
-import math
 from typing import List
+import random
 
 class PermutationList:
     
@@ -25,11 +25,30 @@ class PermutationList:
     def generate_stock(self) -> List[int]:
         self.stock = list(range(1, self.gene_number+1)) * self.total_perm
     
-    #def generate_permutations(self):
-    #    for _ in range(self.total_perm):
-    #        first_pos = self.total_perm.pop()
-    #        second_pos = [num for num in self.total_perm]
+    def generate_permutations(self):
+        permutation_list = []
+        while len(self.stock) != 0:
+            current_permutation = []
+            while len(current_permutation) != self.gene_number:
+                # Draw random number from stock
+                current_num = random.choice(self.stock)
+                # Check if current number is already in list
+                if current_num not in current_permutation:
+                    current_permutation.append(current_num)
+                    self.stock.remove(current_num)
+            # Append current permutation to permutation list
+            if current_permutation in permutation_list:
+                for elem in current_permutation:
+                    self.stock.append(elem)
+            else:
+                permutation_list.append(current_permutation)
+        
+        print(permutation_list)
             
+            
+        
+            
+   
             
 
 """  
@@ -37,4 +56,5 @@ tester = PermutationList()
 tester.input()
 tester.total_permutations()
 tester.generate_stock()
+tester.generate_permutations()
 """
