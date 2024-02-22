@@ -13,7 +13,9 @@ Follow the prompts to enter the number of genes for permutation.
 
 ## PermutationList Class
 
+
 The PermutationList class has the following methods:
+
     
 `input`: Takes user input for the number of genes for permutation.
 
