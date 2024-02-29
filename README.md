@@ -94,7 +94,13 @@ The problem was to find all unique candidate protein sequences that can be trans
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/ORF-finder):**
 The `ORFFinder` class is designed to identify Open Reading Frames (ORFs) in DNA sequences. After converting the DNA sequence to its reverse complement sequence, both sequences are used to generate all possible frames (6 in total). For each frame, the positions of the start and stop codons are determined. The start and stop positions are iterated over to determine which combinations of start and stop positions satisfy both that the stop position is greater than the start position and that no other stop position lies between them.
 
-### Challenge 11: RNA-SPLICER
+### Challenge 11: [RNA-Splicer](https://rosalind.info/problems/splc/)
+
+**Description:**
+Several DNA strings in FASTA format were provided, with the first string considered as the DNA sequence and the subsequent ones as introns. The task involved returning a protein string obtained by transcribing and translating only the exons of the DNA sequence.Several DNA strings in FASTA format were provided, with the first string considered as the DNA sequence and the subsequent ones as introns. The task involved returning a protein string obtained by transcribing and translating only the exons of the DNA sequence.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/RNA_splicer):**
+The script is a Python program designed to process DNA sequences in FASTA format by splicing introns and mapping the resulting DNA sequence to a protein sequence using codon mapping. It utilizes a class named `RNASplicer`, where the `splice_sequence` method removes introns from the raw DNA sequence, and the `express` method maps the spliced DNA sequence to a protein sequence using codon mapping in "DNA" mode.
 
 ## Credits
 - Author: Manuel Gehl
