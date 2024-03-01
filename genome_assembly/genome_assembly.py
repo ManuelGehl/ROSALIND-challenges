@@ -58,3 +58,29 @@ class GenomeAssembly:
                 break
         
         return longest_motif
+    
+    def fuse_reads(self, sequence1:str, sequence2:str) -> str:
+        # Get longest common motifs
+        forward_motif = self.forward_path(sequence1=sequence1, sequence2=sequence2)
+        backward_motif = self.backward_path(sequence1=sequence1, sequence2=sequence2)
+        # Keep the longer motif and determine if prefix or suffix for sequence 1
+        if len(forward_motif) > len(backward_motif):
+            # Means that sequence 1 has a prefix in sequence 2
+            # and sequence 2 will be fused 5' to sequence 1
+            seq2_fragment = sequence2.removesuffix(forward_motif)
+            fused_sequence = seq2_fragment + sequence1
+        elif len(forward_motif) < len(backward_motif):
+            # Means that sequence 2 is a suffix to sequence 1
+            # and will be fused 3' to sequence 1
+            seq2_fragment = sequence2.removeprefix(backward_motif)
+            fused_sequence = sequence1 + seq2_fragment
+        
+        return fused_sequence
+
+
+""" 
+tester = GenomeAssembly()
+dicti = tester.read_sequences()
+seq1, seq2, seq3, seq4 = dicti.values()
+tester.fuse_reads(seq1, seq2)
+"""
