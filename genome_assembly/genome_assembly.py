@@ -29,6 +29,8 @@ class GenomeAssembly:
         the longest common motif between the 2 sequences.
         """
         for position in range(1, len(sequence1)+1):
+            # Initialize longest motif as None
+            longest_motif = None
             # Define current window
             current_window = sequence1[0:position]
             # Check if current window occurs in sequence 2
@@ -47,6 +49,8 @@ class GenomeAssembly:
         the longest common motif between the 2 sequences.
         """
         for position in range(2, len(sequence1)+1):
+            # Initialize longest motif as None
+            longest_motif = None
             # Define current window
             current_window = sequence1[-position:]
             # Check if current window occurs in sequence 2
@@ -59,10 +63,28 @@ class GenomeAssembly:
         
         return longest_motif
     
+    def check_motifs(self, for_motif, back_motif):
+        # If forward motif does not exist, insert placeholder
+        if for_motif is None:
+            for_motif = "X"
+        # If backward motif does not exist, insert placeholder
+        if back_motif is None:
+            back_motif = "X"
+        
+        return for_motif, back_motif
+    
     def fuse_reads(self, sequence1:str, sequence2:str) -> str:
         # Get longest common motifs
         forward_motif = self.forward_path(sequence1=sequence1, sequence2=sequence2)
         backward_motif = self.backward_path(sequence1=sequence1, sequence2=sequence2)
+        
+        # Check motifs
+        forward_motif, backward_motif = self.check_motifs(for_motif=forward_motif,back_motif=backward_motif)
+        
+        # If both motifs were empty, return sequences
+        if forward_motif == "X" and backward_motif == "X":
+            return sequence1, sequence2      
+            
         # Keep the longer motif and determine if prefix or suffix for sequence 1
         if len(forward_motif) > len(backward_motif):
             # Means that sequence 1 has a prefix in sequence 2
@@ -77,6 +99,7 @@ class GenomeAssembly:
         
         return fused_sequence
 
+    
 
 """ 
 tester = GenomeAssembly()
