@@ -1,5 +1,4 @@
-from fasta_reader import read_fasta
-from typing import Dict
+from utility.fasta_reader import read_fasta
 import os
 
 
@@ -9,7 +8,7 @@ class GenomeAssembly:
 
         self.input_path = input_path
         
-    def read_sequences(self) -> Dict:
+    def read_sequences(self) -> dict:
             
         # Check if file exists
         if not os.path.exists(self.input_path):
@@ -98,8 +97,6 @@ class GenomeAssembly:
             fused_sequence = sequence1 + seq2_fragment
         
         return fused_sequence
-
-    
 
 """ 
 tester = GenomeAssembly()
