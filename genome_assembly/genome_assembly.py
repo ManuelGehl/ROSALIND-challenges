@@ -7,8 +7,9 @@ class GenomeAssembly:
     def __init__(self, input_path="data.txt"):
 
         self.input_path = input_path
+        self.matrix = None
         
-    def read_sequences(self) -> dict:
+    def read_sequences(self) -> list:
             
         # Check if file exists
         if not os.path.exists(self.input_path):
@@ -19,88 +20,58 @@ class GenomeAssembly:
             
         # Read all sequences from file
         seq_dict = read_fasta(self.input_path)
+        
         # Output sequences
-        return seq_dict
+        return [sequence for sequence in seq_dict.values()]
     
-    def forward_path(self, sequence1:str, sequence2:str) -> str:
+    def suffix_matrix(self, sequences: list) -> dict:
         """
-        Takes 2 sequences and scans the first sequence from 5' to 3' to find
-        the longest common motif between the 2 sequences.
-        """
-        for position in range(1, len(sequence1)+1):
-            # Initialize longest motif as None
-            longest_motif = None
-            # Define current window
-            current_window = sequence1[0:position]
-            # Check if current window occurs in sequence 2
-            if current_window in sequence2:
-                # Update longest common motif
-                longest_motif = current_window
-            # If current window not part of sequence 2 break loop
-            else:
-                break
-        
-        return longest_motif
-    
-    def backward_path(self, sequence1:str, sequence2:str) -> str:
-        """
-        Takes 2 sequences and scans the first sequence from 3' to 5' to find
-        the longest common motif between the 2 sequences.
-        """
-        for position in range(2, len(sequence1)+1):
-            # Initialize longest motif as None
-            longest_motif = None
-            # Define current window
-            current_window = sequence1[-position:]
-            # Check if current window occurs in sequence 2
-            if current_window in sequence2:
-                # Update longest common motif
-                longest_motif = current_window
-            # If current window not part of sequence 2 break loop
-            else:
-                break
-        
-        return longest_motif
-    
-    def check_motifs(self, for_motif, back_motif):
-        # If forward motif does not exist, insert placeholder
-        if for_motif is None:
-            for_motif = "X"
-        # If backward motif does not exist, insert placeholder
-        if back_motif is None:
-            back_motif = "X"
-        
-        return for_motif, back_motif
-    
-    def fuse_reads(self, sequence1:str, sequence2:str) -> str:
-        # Get longest common motifs
-        forward_motif = self.forward_path(sequence1=sequence1, sequence2=sequence2)
-        backward_motif = self.backward_path(sequence1=sequence1, sequence2=sequence2)
-        
-        # Check motifs
-        forward_motif, backward_motif = self.check_motifs(for_motif=forward_motif,back_motif=backward_motif)
-        
-        # If both motifs were empty, return sequences
-        if forward_motif == "X" and backward_motif == "X":
-            return sequence1, sequence2      
-            
-        # Keep the longer motif and determine if prefix or suffix for sequence 1
-        if len(forward_motif) > len(backward_motif):
-            # Means that sequence 1 has a prefix in sequence 2
-            # and sequence 2 will be fused 5' to sequence 1
-            seq2_fragment = sequence2.removesuffix(forward_motif)
-            fused_sequence = seq2_fragment + sequence1
-        elif len(forward_motif) < len(backward_motif):
-            # Means that sequence 2 is a suffix to sequence 1
-            # and will be fused 3' to sequence 1
-            seq2_fragment = sequence2.removeprefix(backward_motif)
-            fused_sequence = sequence1 + seq2_fragment
-        
-        return fused_sequence
+        Calculate the suffix matrix to determine the maximum overlapping substrings between all sequences.
+        The entries are the suffix score, which is the maximum number of overlapping nucleotides from the 
+        3' end of the sequence in the column with the 5' end of the sequence in the row.
 
-""" 
-tester = GenomeAssembly()
-dicti = tester.read_sequences()
-seq1, seq2, seq3, seq4 = dicti.values()
-tester.fuse_reads(seq1, seq2)
-"""
+        Args:
+            sequences (list): A list of input sequences.
+
+        Returns:
+            dict: A suffix matrix with all sequences as columns and rows and the suffix score indicating the maximum overlapping substring length.
+            
+        Example:
+        >>> sequences = ['ATTAGACCTG', 'AGACCTGCCG']
+        >>> suffix_matrix(sequences)
+            {'ATTAGACCTG': [0, 7], 'AGACCTGCCG': [0, 0]}
+            # That means the 2nd sequence has a suffix score of 7 since AGACCTG overlapps with 1st sequence.
+        """
+        # Initialize suffix matrix with 0s
+        suffix_matrix = {sequence: 0 for sequence in sequences}
+        
+        # Iterate over sequences
+        for matrix_sequence in suffix_matrix.keys():
+            suffix_score = []
+            for sequence in sequences:
+                # If sequences are identical set suffix score to 0
+                if matrix_sequence == sequence:
+                    suffix_score.append(0)
+                else:
+                    for position in range(len(sequence), 0, -1):
+                        current_window = sequence[:position]
+                        # Check if the current window matches the suffix of the matrix sequence
+                        if current_window == matrix_sequence[-position:]:
+                            suffix_score.append(position)
+                            break
+                        # If sequences have no overlap at all, score 0
+                        if position == 1:
+                            suffix_score.append(0)
+            suffix_matrix[matrix_sequence] = suffix_score
+        
+        return suffix_matrix
+
+def main():
+    tester = GenomeAssembly()
+    seq = tester.read_sequences()
+    seq = [seq[0], seq[2]]
+    matrix = tester.suffix_matrix(sequences=seq)
+    print(matrix)
+
+if __name__ == "__main__":
+    main()
