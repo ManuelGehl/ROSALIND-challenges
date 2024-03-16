@@ -8,8 +8,9 @@ class GenomeAssembly:
 
         self.input_path = input_path
         self.matrix = None
+        self.sequences = None
         
-    def read_sequences(self) -> list:
+    def read_sequences(self) -> None:
             
         # Check if file exists
         if not os.path.exists(self.input_path):
@@ -22,16 +23,13 @@ class GenomeAssembly:
         seq_dict = read_fasta(self.input_path)
         
         # Output sequences
-        return [sequence for sequence in seq_dict.values()]
+        self.sequences = [sequence for sequence in seq_dict.values()]
     
-    def suffix_matrix(self, sequences: list) -> dict:
+    def suffix_matrix(self) -> dict:
         """
         Calculate the suffix matrix to determine the maximum overlapping substrings between all sequences.
         The entries are the suffix score, which is the maximum number of overlapping nucleotides from the 
         3' end of the sequence in the column with the 5' end of the sequence in the row.
-
-        Args:
-            sequences (list): A list of input sequences.
 
         Returns:
             dict: A suffix matrix with all sequences as columns and rows and the suffix score indicating the maximum overlapping substring length.
@@ -43,12 +41,12 @@ class GenomeAssembly:
             # That means the 2nd sequence has a suffix score of 7 since AGACCTG overlapps with 1st sequence.
         """
         # Initialize suffix matrix with 0s
-        suffix_matrix = {sequence: 0 for sequence in sequences}
+        suffix_matrix = {sequence: 0 for sequence in self.sequences}
         
         # Iterate over sequences
         for matrix_sequence in suffix_matrix.keys():
             suffix_score = []
-            for sequence in sequences:
+            for sequence in self.sequences:
                 # If sequences are identical set suffix score to 0
                 if matrix_sequence == sequence:
                     suffix_score.append(0)
@@ -65,13 +63,44 @@ class GenomeAssembly:
             suffix_matrix[matrix_sequence] = suffix_score
         
         return suffix_matrix
+    
+    def assemble(self, suffix_matrix: dict) -> str:
+        pass
+        
+
+        
+    def find_terminus(self, suffix_matrix):
+        # First find the read will be placed at the 3' end since it has the lowest sum of passed suffix scores
+        suffix_sums = {sequence: sum(suffix_score) for sequence, suffix_score in suffix_matrix.items()}
+        terminus = min(suffix_sums, key=lambda seq: suffix_sums[seq])
+        # Determine id of terminus
+        terminus_id = self.sequences.index(terminus)
+    
+    # TO do 
+    def next_prefix(self, identifier):
+               # Find the highest suffix score for terminus
+        highest_score = 0
+        for seq, scores in suffix_matrix.items():
+            if scores[terminus_id] > highest_score:
+                highest_score = scores[terminus_id]
+                next_prefix = seq
+    
+    
+    
+    # Find next prefix
+    # Fuse sequences
+                
+            
+     
+
+
+
 
 def main():
     tester = GenomeAssembly()
-    seq = tester.read_sequences()
-    seq = [seq[0], seq[2]]
-    matrix = tester.suffix_matrix(sequences=seq)
-    print(matrix)
+    tester.read_sequences()
+    matrix = tester.suffix_matrix()
+    tester.assemble(matrix)
 
 if __name__ == "__main__":
     main()
