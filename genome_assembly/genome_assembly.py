@@ -7,8 +7,9 @@ class GenomeAssembly:
     def __init__(self, input_path="data.txt"):
 
         self.input_path = input_path
-        self.matrix = None
         self.sequences = None
+        self.matrix = None
+        self.transposed_matrix = None
         
     def read_sequences(self) -> None:
             
@@ -25,7 +26,7 @@ class GenomeAssembly:
         # Output sequences
         self.sequences = [sequence for sequence in seq_dict.values()]
     
-    def suffix_matrix(self) -> dict:
+    def suffix_matrix(self) -> None:
         """
         Calculate the suffix matrix to determine the maximum overlapping substrings between all sequences.
         The entries are the suffix score, which is the maximum number of overlapping nucleotides from the 
@@ -62,45 +63,59 @@ class GenomeAssembly:
                             suffix_score.append(0)
             suffix_matrix[matrix_sequence] = suffix_score
         
-        return suffix_matrix
+        self.matrix = suffix_matrix
     
-    def assemble(self, suffix_matrix: dict) -> str:
-        pass
-        
-
-        
-    def find_terminus(self, suffix_matrix):
+    def transpose_suffix_matrix(self) -> None:
+        self.transposed_matrix = [list(row) for row in zip(*self.matrix.values())]
+     
+    def find_terminus(self):
         # First find the read will be placed at the 3' end since it has the lowest sum of passed suffix scores
-        suffix_sums = {sequence: sum(suffix_score) for sequence, suffix_score in suffix_matrix.items()}
+        suffix_sums = {sequence: sum(suffix_score) for sequence, suffix_score in self.matrix.items()}
         terminus = min(suffix_sums, key=lambda seq: suffix_sums[seq])
         # Determine id of terminus
         terminus_id = self.sequences.index(terminus)
+        return terminus_id
     
-    # TO do 
     def next_prefix(self, identifier):
-               # Find the highest suffix score for terminus
-        highest_score = 0
-        for seq, scores in suffix_matrix.items():
-            if scores[terminus_id] > highest_score:
-                highest_score = scores[terminus_id]
-                next_prefix = seq
+        max_score = max(self.transposed_matrix[identifier])
+        prefix_id = self.transposed_matrix[identifier].index(max_score)
+        
+        return prefix_id, max_score
     
-    
-    
-    # Find next prefix
-    # Fuse sequences
+    def assemble(self):
+        
+        for step in range(len(self.sequences) - 1):
+            if step == 0:
+                # Start with terminus of sequence
+                term_id = self.find_terminus()
+                term_seq = self.sequences[term_id]
+                prefix_id, max_score = self.next_prefix(identifier=term_id)
+                # Trim 3' part of prefix according to score
+                trimmed_prefix = self.sequences[prefix_id][:-max_score]
+                # Fuse sequences
+                fused_seq = trimmed_prefix + term_seq
+            else:
+                # Change prefix_id to suffix_id
+                suffix_id = prefix_id
+                # Determine next prefix
+                prefix_id, max_score = self.next_prefix(identifier=suffix_id)
+                # Trim 3' part of prefix according to score
+                trimmed_prefix = self.sequences[prefix_id][:-max_score]
+                # Fuse sequences
+                fused_seq = trimmed_prefix + fused_seq
+        
+        print(fused_seq)
                 
-            
-     
-
+                
 
 
 
 def main():
     tester = GenomeAssembly()
     tester.read_sequences()
-    matrix = tester.suffix_matrix()
-    tester.assemble(matrix)
+    tester.suffix_matrix()
+    tester.transpose_suffix_matrix()
+    tester.assemble()
 
 if __name__ == "__main__":
     main()
