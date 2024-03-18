@@ -112,13 +112,30 @@ The script defines a class, SplicedMotifFinder, to identify a spliced motif with
 
 ### Challenge 13: [Calculating Expected Offspring](https://rosalind.info/problems/iev/)
 
+**Description:**
+This task involves computing the expected number of offspring with a dominant phenotype in the next generation, given six integers representing the number of couples with specific genotype pairings. 
+
 ### Challenge 14: [Overlap Graphs](https://rosalind.info/problems/grph/)
+
+**Description:**
+This task involves generating the adjacency list for an overlap graph based on a collection of DNA strings. In an overlap graph, each string corresponds to a node, and a directed edge exists between two nodes if there is an overlap between a length-k suffix of one string and a length-k prefix of another string. The goal is to create an adjacency list representing this graph, specifically for a length-k value of 3.
+
 
 ### Challenge 15: [Enumerating Gene Orders](https://rosalind.info/problems/perm/)
 
+**Description:**
+This task involves calculating the total number of permutations of length n, where n is a positive integer not exceeding 7. Additionally, we need to generate a list of all such permutations.
+
 ### Challenge 16: [Transitions and Transversions](https://rosalind.info/problems/tran/)
 
+**Description:**
+This task involves calculating the transition/transversion ratio for two DNA strings of equal length.
+
 ### Challenge 17: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
+
+**Description:**
+This task involves finding the shortest superstring that contains all the given DNA strings.
+To solve this, we need to reconstruct the chromosome by merging pairs of strings that overlap by more than half their length.
 
 ## Credits
 - Author: Manuel Gehl
