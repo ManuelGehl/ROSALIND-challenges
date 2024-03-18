@@ -102,6 +102,18 @@ Several DNA strings in FASTA format were provided, with the first string conside
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/RNA_splicer):**
 The script is a Python program designed to process DNA sequences in FASTA format by splicing introns and mapping the resulting DNA sequence to a protein sequence using codon mapping. It utilizes a class named `RNASplicer`, where the `splice_sequence` method removes introns from the raw DNA sequence, and the `express` method maps the spliced DNA sequence to a protein sequence using codon mapping in "DNA" mode.
 
+### Challenge 12: [Finding a Spliced Motif](https://rosalind.info/problems/sseq/)
+
+### Challenge 13: [Calculating Expected Offspring](https://rosalind.info/problems/iev/)
+
+### Challenge 14: [Overlap Graphs](https://rosalind.info/problems/grph/)
+
+### Challenge 15: [Enumerating Gene Orders](https://rosalind.info/problems/perm/)
+
+### Challenge 16: [Transitions and Transversions](https://rosalind.info/problems/tran/)
+
+### Challenge 17: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
