@@ -113,29 +113,45 @@ The script defines a class, SplicedMotifFinder, to identify a spliced motif with
 ### Challenge 13: [Calculating Expected Offspring](https://rosalind.info/problems/iev/)
 
 **Description:**
-This task involves computing the expected number of offspring with a dominant phenotype in the next generation, given six integers representing the number of couples with specific genotype pairings. 
+This task involves computing the expected number of offspring with a dominant phenotype in the next generation, given six integers representing the number of couples with specific genotype pairings.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/expected_offspring_calculator)**
+This script calculates the expected number of offspring displaying the dominant phenotype in the next generation based on given genotype pairings and predefined pairing probabilities.
 
 ### Challenge 14: [Overlap Graphs](https://rosalind.info/problems/grph/)
 
 **Description:**
 This task involves generating the adjacency list for an overlap graph based on a collection of DNA strings. In an overlap graph, each string corresponds to a node, and a directed edge exists between two nodes if there is an overlap between a length-k suffix of one string and a length-k prefix of another string. The goal is to create an adjacency list representing this graph, specifically for a length-k value of 3.
 
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/prefix_suffix_graph)**
+The script reads DNA sequences from an input file and creates k-mers (prefixes and suffixes) for each DNA sequence using a specified k-mer length. It constructs an adjacency list representing the overlap relationships between DNA sequences based on their prefixes and suffixes. If the suffix of one sequence matches the prefix of another sequence, they are considered adjacent.
 
 ### Challenge 15: [Enumerating Gene Orders](https://rosalind.info/problems/perm/)
 
 **Description:**
 This task involves calculating the total number of permutations of length n, where n is a positive integer not exceeding 7. Additionally, we need to generate a list of all such permutations.
 
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/enumerating_gene_orders)**
+The script takes user input for the number of genes for permutation, ensuring that the input is between 1 and 7 and calculates the total number of permutations using the factorial formula.
+
 ### Challenge 16: [Transitions and Transversions](https://rosalind.info/problems/tran/)
 
 **Description:**
 This task involves calculating the transition/transversion ratio for two DNA strings of equal length.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/transition_transversion_ratio)**
+The transition/transversion ratio for two DNA sequences is calculated by comparing corresponding bases in the two sequences to count the number of transitions (purine to purine or pyrimidine to pyrimidine) and transversions (purine to pyrimidine or vice versa) using the `count_transitions_transversions` method. The transition/transversion ratio is computed by dividing the number of transitions by the number of transversions.
 
 ### Challenge 17: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
 
 **Description:**
 This task involves finding the shortest superstring that contains all the given DNA strings.
 To solve this, we need to reconstruct the chromosome by merging pairs of strings that overlap by more than half their length.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/genome_assembly):**
+The script performs genome assembly using a suffix matrix approach. It first reads the DNA sequences and calculates a suffix matrix to determine the maximum overlapping substrings between all sequences. The suffix_matrix method computes the suffix score, representing the maximum overlapping nucleotides between the 3' end of one sequence and the 5' end of another.
+
+The sequence to be placed at the 3' end is identified based on the lowest sum of passed suffix scores. The assembly process iteratively fuses sequences based on their overlapping suffixes and prefixes. It starts with the terminus sequence and proceeds to merge sequences until a complete genome is assembled.
 
 ## Credits
 - Author: Manuel Gehl
