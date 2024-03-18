@@ -104,6 +104,12 @@ The script is a Python program designed to process DNA sequences in FASTA format
 
 ### Challenge 12: [Finding a Spliced Motif](https://rosalind.info/problems/sseq/)
 
+**Description:**
+In this task, we aim to find the indices in a DNA string where another DNA string's symbols appear as a subsequence. This involves comparing the symbols of both strings and recording indices where matches occur.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/spliced_motif_finder):**
+The script defines a class, SplicedMotifFinder, to identify a spliced motif within a DNA sequence. It reads the sequence from a FASTA file, generates position lists for each character in the motif, finds the spliced motif based on these lists, and writes the result to an output file. The main function executes these methods in sequence.
+
 ### Challenge 13: [Calculating Expected Offspring](https://rosalind.info/problems/iev/)
 
 ### Challenge 14: [Overlap Graphs](https://rosalind.info/problems/grph/)
