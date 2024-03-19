@@ -1,5 +1,5 @@
-from pattern_frequency import pattern_frequency
-from pattern_count import pattern_count
+from utility.pattern_frequency import pattern_frequency
+from utility.pattern_count import pattern_count
 
 def filter_frequencies(frequency_dict: dict, occurence: int) -> dict:
     """
