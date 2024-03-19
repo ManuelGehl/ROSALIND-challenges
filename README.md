@@ -142,7 +142,18 @@ This task involves calculating the transition/transversion ratio for two DNA str
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/transition_transversion_ratio)**
 The transition/transversion ratio for two DNA sequences is calculated by comparing corresponding bases in the two sequences to count the number of transitions (purine to purine or pyrimidine to pyrimidine) and transversions (purine to pyrimidine or vice versa) using the `count_transitions_transversions` method. The transition/transversion ratio is computed by dividing the number of transitions by the number of transversions.
 
-### Challenge 17: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
+### Challenge 17: [Find Patterns Forming Clumps in a Strings](https://rosalind.info/problems/ba1e/)
+
+**Description:**
+The Clump Finding Problem involves identifying patterns within a string Genome. A pattern forms an (L, t)-clump within Genome if it appears at least t times in a contiguous interval of length L. The task is to find all distinct k-mers that form (L, t)-clumps within a Genome.
+
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/patterns_forming_clumps)**
+Key functions include `pattern_frequency` and `pattern_count`, which determine pattern frequencies and count occurrences within the sequence, respectively. Another function, `filter_frequencies`, selects patterns meeting a specified occurrence threshold.
+
+The core function,`find_clumps`, identifies clumped patterns in the sequence based on filtered pattern frequencies. It slides over the sequence, counting occurrences of each pattern within a window, and only includes patterns meeting the occurrence criteria.
+
+### Challenge 18: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
 
 **Description:**
 This task involves finding the shortest superstring that contains all the given DNA strings.
