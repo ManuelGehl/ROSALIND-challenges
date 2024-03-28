@@ -153,7 +153,7 @@ Key functions include `pattern_frequency` and `pattern_count`, which determine p
 
 The core function,`find_clumps`, identifies clumped patterns in the sequence based on filtered pattern frequencies. It slides over the sequence, counting occurrences of each pattern within a window, and only includes patterns meeting the occurrence criteria.
 
-### Challenge 18: [Genome Assembly as Shortest Superstring ](https://rosalind.info/problems/long/)
+### Challenge 18: [Genome Assembly as Shortest Superstring](https://rosalind.info/problems/long/)
 
 **Description:**
 This task involves finding the shortest superstring that contains all the given DNA strings.
@@ -163,6 +163,14 @@ To solve this, we need to reconstruct the chromosome by merging pairs of strings
 The script performs genome assembly using a suffix matrix approach. It first reads the DNA sequences and calculates a suffix matrix to determine the maximum overlapping substrings between all sequences. The suffix_matrix method computes the suffix score, representing the maximum overlapping nucleotides between the 3' end of one sequence and the 5' end of another.
 
 The sequence to be placed at the 3' end is identified based on the lowest sum of passed suffix scores. The assembly process iteratively fuses sequences based on their overlapping suffixes and prefixes. It starts with the terminus sequence and proceeds to merge sequences until a complete genome is assembled.
+
+### Challenge 19: [Enumerating Oriented Gene Orderings](https://rosalind.info/problems/sign/)
+
+**Description:**
+The object of this problem is to find the total number of signed permutations of length n, where n is a positive integer not greater than 6. A signed permutation is an ordering of positive integers from 1 to n, where each integer has either a positive or negative sign. For example, if n=5, a signed permutation could be (5, -3, -2, 1, 4). This represents possible gene permutations, taking into account the direction of the genes on the forward and reverse strands.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/signed_gene_order):**
+The Python script permutation_list.py efficiently generates and stores all possible permutations of a given set of genes. It prompts the user for the number of genes, checks for validity, and proceeds to generate permutations. Using recursion, it systematically combines genes to form complete permutations.
 
 ## Credits
 - Author: Manuel Gehl
