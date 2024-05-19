@@ -39,8 +39,8 @@ class OverlapGraph:
             lines = file.readlines()
             self.sequences = [sequence.strip() for sequence in lines]
         
-        # Save overlapp length of sequences (k - 1)
-        self.overlapp_length = len(self.sequences[0]) - 1
+        # Save overlap length of sequences (k - 1)
+        self.overlap_length = len(self.sequences[0]) - 1
     
     def construct_graph(self) -> list:
         """
@@ -55,7 +55,7 @@ class OverlapGraph:
         # Loop trough sequences
         for sequence in self.sequences:
             # Determine suffix of current sequence and find matchin sequences with suffix = prefix
-            suffix = sequence[-self.overlapp_length:]
+            suffix = sequence[-self.overlap_length:]
             matched_sequences = [sequence for sequence in self.sequences if sequence.startswith(suffix)]
             # If current sequence has a matching sequence, add to graph
             if matched_sequences:
