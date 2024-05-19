@@ -172,6 +172,14 @@ The object of this problem is to find the total number of signed permutations of
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/signed_gene_order):**
 The Python script permutation_list.py efficiently generates and stores all possible permutations of a given set of genes. It prompts the user for the number of genes, checks for validity, and proceeds to generate permutations. Using recursion, it systematically combines genes to form complete permutations.
 
+### Challenge 20: [Enumerating Motifs with d mismatches](https://rosalind.info/problems/ba2a/)
+
+**Description:**
+Given a collection of DNA strings, the task is to find k-mers (substrings of length k) that appear in every string with at most d mismatches. 
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/motif_enumeration):**
+The class `MotifEnumeration` is designed to solve this problem efficiently by using a dictionary and neighborhood generation. It simply generates all possible k-mers from a sequence and the d-neighborhood of each of those k-mers. If a particular k-mer occurs in that neighborhood of any given sequence, it is motif.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
