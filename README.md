@@ -180,6 +180,14 @@ Given a collection of DNA strings, the task is to find k-mers (substrings of len
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/motif_enumeration):**
 The class `MotifEnumeration` is designed to solve this problem efficiently by using a dictionary and neighborhood generation. It simply generates all possible k-mers from a sequence and the d-neighborhood of each of those k-mers. If a particular k-mer occurs in that neighborhood of any given sequence, it is motif.
 
+### Challenge 21: [Construct the Overlap Graph of a Collection of k-mers](https://rosalind.info/problems/ba3c/)
+
+**Description:**
+Given a collection of DNA strings, the task is to construct an overlap graph with sequences as nodes and edges pointing from a sequence with a suffix that matches the prefix of another sequence.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/overlap_graph):**
+The algorithm simply scans through all given sequences, constructs the suffix of the current sequence, and finds the matching sequence that has the qual prefix. These sequences are then combined as a tuple and appended to the adjacency list.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
