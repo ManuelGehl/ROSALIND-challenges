@@ -188,6 +188,14 @@ Given a collection of DNA strings, the task is to construct an overlap graph wit
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/overlap_graph):**
 The algorithm simply scans through all given sequences, constructs the suffix of the current sequence, and finds the matching sequence that has the qual prefix. These sequences are then combined as a tuple and appended to the adjacency list.
 
+### Challenge 22: [Construct the De Bruijn Graph of a String](https://rosalind.info/problems/ba3d/)
+
+**Description:**
+The De Bruijn graph should be constructed from a DNA string by creating a path graph of k-mers, labeling nodes with (k-1)-mers, and merging identically labeled nodes.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/bruijn_graph_string):**
+The `BruijnGraphString` class first generates all possible k-mers based on the given DNA sequence and k-mer size, and then removes any duplicate k-mers. From these k-mers, the nodes of the graph are constructed by extracting the first and last k-1 nucleotides. The edges are constructed by finding pairs of nodes with matching suffixes and prefixes.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
