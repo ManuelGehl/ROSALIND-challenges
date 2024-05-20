@@ -87,11 +87,11 @@ class BruijnGraphString:
         for node in nodes:
             # Determine suffix of current node and find matching nodes with suffix = prefix
             suffix = node[1:]
-            matched_nodes = [matched_node for matched_node in nodes if matched_node.startswith(suffix)]
+            matched_nodes = sorted([matched_node for matched_node in nodes if matched_node.startswith(suffix)])
             # Only add edge if overlap occured
             if matched_nodes:
                 adjacency_list.append(tuple([node] + matched_nodes))
-        
+
         # Return sorted adjacency list
         return sorted(adjacency_list)
         
