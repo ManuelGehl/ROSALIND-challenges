@@ -196,6 +196,14 @@ The De Bruijn graph should be constructed from a DNA string by creating a path g
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/bruijn_graph_string):**
 The `BruijnGraphString` class first generates all possible k-mers based on the given DNA sequence and k-mer size, and then removes any duplicate k-mers. From these k-mers, the nodes of the graph are constructed by extracting the first and last k-1 nucleotides. The edges are constructed by finding pairs of nodes with matching suffixes and prefixes.
 
+### Challenge 23: [Construct the De Bruijn Graph of a Collection of k-mers](https://rosalind.info/problems/ba3e/)
+
+**Description:**
+The De Bruijn graph should be constructed from a collection of k-mers by creating a path graph of k-mers, labeling nodes with (k-1)-mers, and merging identically labeled nodes.
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/bruijn_graph_collection):**
+The `BruijnGraphCollection` class constructs the graph by first spliting each k-mer into 2 nodes with k-1 nucleotides overlap. The corresponding edges are the k-mer sequences.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
