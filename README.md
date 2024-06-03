@@ -204,6 +204,14 @@ The De Bruijn graph should be constructed from a collection of k-mers by creatin
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/bruijn_graph_collection):**
 The `BruijnGraphCollection` class constructs the graph by first spliting each k-mer into 2 nodes with k-1 nucleotides overlap. The corresponding edges are the k-mer sequences.
 
+### Challenge 24: [Find an Eulerian Path in a Graph](https://rosalind.info/problems/ba3g/)
+
+**Description:**
+An unbalanced De Bruijn graph is given and the task is to find an Eulerian path in this graph. 
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/eulerian_path):**
+The graph is first balanced by identifying the 2 nodes that do not have equal incoming and outgoing edges and then inserting an artificial edge between these 2 nodes. The Eulerian path is determined by walking through the graph, and whenever there is no unused edge, another walk is initialized from the first node in the walked path that still has unexplored edges. The algorithm stops when all edges have been explored.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
