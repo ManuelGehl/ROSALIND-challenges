@@ -212,6 +212,14 @@ An unbalanced De Bruijn graph is given and the task is to find an Eulerian path 
 **[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/eulerian_path):**
 The graph is first balanced by identifying the 2 nodes that do not have equal incoming and outgoing edges and then inserting an artificial edge between these 2 nodes. The Eulerian path is determined by walking through the graph, and whenever there is no unused edge, another walk is initialized from the first node in the walked path that still has unexplored edges. The algorithm stops when all edges have been explored.
 
+### Challenge 25: [Reconstruct a String from its k-mer Composition](https://rosalind.info/problems/ba3h/)
+
+**Description:**
+A k-mer composition of a DNA sequence is given and the task is to assemble the original DNA sequence. 
+
+**[Solution](https://github.com/ManuelGehl/ROSALIND-challenges/tree/main/string_reconstruction):**
+A De Bruijn graph is constructed by dividing each k-mer into its k-1 prefix and suffix and using these substrings as nodes. Edges represent the corresponding k-mers connecting 2 nodes. The Eulerian path is then found as described in Challenge 24.
+
 ## Credits
 - Author: Manuel Gehl
 - ROSALIND: http://rosalind.info/
